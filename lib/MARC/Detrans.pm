@@ -78,8 +78,6 @@ sub new {
     ## verify a few things 
     croak( $args{config} . ": missing code attribute in language element" )
         if ! $config->languageCode();
-    croak( $args{config} . ": missing code attribute in script element" )
-        if ! $config->scriptCode();
     return _init( $class, $config );
 }
 
@@ -277,7 +275,8 @@ sub add880 {
     my ( $record, $count, $field, $subfields, $scriptCode, $orientation ) = @_;
     my $tag = $field->tag();
     my $occurrence = sprintf( '%02d', $count );
-    my $sub6 = "$tag-$occurrence/$scriptCode";
+    my $sub6 = "$tag-$occurrence";
+    $sub6 .= "/$scriptCode" if defined $scriptCode;
     $sub6 .= "/$orientation" if defined $orientation;
     my $f880 = MARC::Field->new(
         '880',
@@ -320,6 +319,8 @@ sub add066 {
         next if $_ eq '(B';
         push( @subfields, 'c', $_ );
     }
+
+    return if @subfields == 0;
 
     ## don't obliterate an 066 that's already present
     my $f066 = $record->field( '066' );

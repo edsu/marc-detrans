@@ -165,7 +165,7 @@ sub _parse {
     my $self = shift;
     my $handler = ConfigHandler->new();
     my $parser = XML::SAX::ParserFactory->parser( Handler => $handler );
-    ## we skip parsing if we don't ahve a file to parse, which
+    ## we skip parsing if we don't have a file to parse, which
     ## can happen when the configuration is being manually configured
     ## in tests...
     $parser->parse_uri( $self->{ file } ) if $self->{ file };
