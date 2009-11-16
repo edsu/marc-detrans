@@ -5,7 +5,7 @@ use warnings;
 use Carp qw( croak );
 use MARC::Detrans::Config;
 
-our $VERSION = '1.4';
+our $VERSION = '1.41';
 
 =head1 NAME
 
